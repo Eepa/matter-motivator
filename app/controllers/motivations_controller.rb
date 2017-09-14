@@ -20,7 +20,7 @@ class MotivationsController < ApplicationController
       mention_name = splitted_text[1]
 
       motivation_text = "Kyllä se siitä"
-      if mention_name.nil?
+      if !mention_name.nil?
         motivation_text = motivation_text + mention_name
       end
 
