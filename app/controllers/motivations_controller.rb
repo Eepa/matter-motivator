@@ -25,7 +25,7 @@ class MotivationsController < ApplicationController
       end
 
       if params_token == MATTERMOST_TOKEN
-        hello = {text: motivation_text + " :motivation-whale:" }
+        hello = {username: "motivator", "icon_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnexdfcKFa1yE0bPvmbhDrLA3wVhx2zqa8PhOy4Pg9szriLhyVQQ", text: motivation_text + " :motivation-whale:" }
         format.html
         format.json { render json: hello }
       else
