@@ -11,17 +11,17 @@ class MotivationsController < ApplicationController
 
   def motivate
     respond_to do |format|
-
       params_token = motivate_params[:token]
       params_username = motivate_params[:user_name]
-      params_text = motivate_path[:text]
-
-      splitted_text = params_text.split(' ')
-      mention_name = splitted_text[1]
-
+      params_text = motivate_params[:text]
       motivation_text = "Kyllä se siitä"
-      if !mention_name.nil?
-        motivation_text = motivation_text + mention_name
+
+      if !params_text.to_s.empty?
+        splitted_text = params_text.split(' ')
+        mention_name = splitted_text[1]
+        if !mention_name.nil?
+          motivation_text = motivation_text + " " + mention_name
+        end
       end
 
       if params_token == MATTERMOST_TOKEN
