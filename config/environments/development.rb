@@ -40,4 +40,5 @@ Rails.application.configure do
   # config.action_view.raise_on_missing_translations = true
 
   MATTERMOST_TOKEN = Rails.application.secrets.mattermost_token
+  SECOND_MATTERMOST_TOKEN = Rails.application.secrets.second_mattermost_token
 end

@@ -78,4 +78,5 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   MATTERMOST_TOKEN = Rails.application.secrets.mattermost_token
+  SECOND_MATTERMOST_TOKEN = Rails.application.secrets.second_mattermost_token
 end
