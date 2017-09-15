@@ -10,4 +10,28 @@ class ApplicationController < ActionController::Base
     request.format.json?
   end
 
+  def check_mattermost_token
+    mattermost_tokens = get_mattermost_tokens
+    params_token = motivate_params[:token]
+
+    unless mattermost_tokens.include? params_token
+      respond_to do |format|
+        format.html
+        format.json { head :forbidden }
+      end
+    end
+  end
+
+  private
+
+  def get_mattermost_tokens
+    unless MATTERMOST_TOKEN.nil?
+      MATTERMOST_TOKEN.split(':')
+    end
+  end
+
+  def motivate_params
+    params.permit(:token)
+  end
+
 end
