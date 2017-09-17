@@ -23,11 +23,11 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'responders'
 
-group :development, :test do
-  gem 'sqlite3'
-end
+# group :development, :test do
+#   gem 'sqlite3'
+# end
 
-group :production do
+group :production, :development, :test do
   gem 'pg'
   gem 'rails_12factor'
 end
