@@ -1,0 +1,63 @@
+version: '2.1'
+
+services:
+  nginx:
+    image: eepa/nginx
+    mem_limit: 128m
+    restart: always
+    environment:
+      - CONSUL_AGENT=1
+      - ACME_ENV=staging
+      - ACME_DOMAIN
+      - CONSUL=mc.svc.${TRITON_CNS_SEARCH_DOMAIN_PRIVATE}
+    depends_on:
+      - "consul"
+    ports:
+      - 80
+      - 443
+      - 9090
+    labels:
+      - triton.cns.services=motivator
+    network_mode: bridge
+
+  backend:
+    image: eepa/matter-motivator-production
+    mem_limit: 256m
+    restart: always
+    environment:
+      - CONSUL_AGENT=1
+      - ACME_ENV=staging
+      - CONSUL=mc.svc.${TRITON_CNS_SEARCH_DOMAIN_PRIVATE}
+      - SECRET_KEY_BASE=<insert your key here>
+    labels:
+      - triton.cns.services=nb
+    links:
+      - postgres
+    network_mode: bridge
+
+  postgres:
+    image: eepa/postgres:latest
+    mem_limit: 1g
+    restart: always
+    environment:
+      - CONSUL=mc.svc.${TRITON_CNS_SEARCH_DOMAIN_PRIVATE}
+      - CONSUL_AGENT=1
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=<insert your password here>
+      - POSTGRES_DB=motivator_production
+      - PGDATA=/var/lib/postgresql/data
+    network_mode: bridge
+
+  consul:
+    image: autopilotpattern/consul:0.7.2-r0.8
+    command: >
+      /usr/local/bin/containerpilot
+      /bin/consul agent -server
+        -bootstrap-expect 1
+        -config-dir=/etc/consul
+        -ui-dir /ui
+    restart: always
+    mem_limit: 128m
+    labels:
+      - triton.cns.services=mc
+    network_mode: bridge
