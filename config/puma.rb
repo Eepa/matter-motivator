@@ -20,9 +20,6 @@ on_worker_boot do
     config = ActiveRecord::Base.configurations[Rails.env] ||
         Rails.application.config.database_configuration[Rails.env]
     config['pool'] = ENV['MAX_THREADS'] || 5
-    config['password'] = ENV['POSTGRES_PASSWORD']
-    config['host'] = ENV['POSTGRES_HOST']
-    config['user'] = 'asfasd123'
     ActiveRecord::Base.establish_connection(config)
   end
 end
