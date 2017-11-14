@@ -26,13 +26,17 @@ services:
     restart: always
     environment:
       - CONSUL_AGENT=1
-      - ACME_ENV=staging
       - CONSUL=mc.svc.${TRITON_CNS_SEARCH_DOMAIN_PRIVATE}
       - SECRET_KEY_BASE=<insert your key here>
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=<insert your password here>
+      - POSTGRES_HOST=motivatorpostgres.svc.${TRITON_CNS_SEARCH_DOMAIN_PRIVATE}
+    depends_on:
+      - "consul"
+      - "nginx"
+      - "postgres"
     labels:
       - triton.cns.services=nb
-    links:
-      - postgres
     network_mode: bridge
 
   postgres:
@@ -46,6 +50,10 @@ services:
       - POSTGRES_PASSWORD=<insert your password here>
       - POSTGRES_DB=motivator_production
       - PGDATA=/var/lib/postgresql/data
+    depends_on:
+      - "consul"
+    labels:
+      - triton.cns.services=motivatorpostgres
     network_mode: bridge
 
   consul:

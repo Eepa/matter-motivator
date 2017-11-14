@@ -50,8 +50,8 @@ production:
   encoding: unicode
   pool: 5
   timeout: 5000
-  username: postgres
-  password: <%= ENV['DATABASE_PASSWORD'] %>
-  host: postgres
+  username: <%= ENV['POSTGRES_USER'] %>
+  password: <%= ENV['POSTGRES_PASSWORD'] %>
+  host: <%= ENV['POSTGRES_HOST'] %>
   port: 5432
   database: motivator_production
