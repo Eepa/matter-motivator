@@ -28,6 +28,7 @@ services:
       - CONSUL_AGENT=1
       - CONSUL=mc.svc.${TRITON_CNS_SEARCH_DOMAIN_PRIVATE}
       - SECRET_KEY_BASE=<insert your key here>
+      - RACK_ENV=production
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=<insert your password here>
       - POSTGRES_HOST=motivatorpostgres.svc.${TRITON_CNS_SEARCH_DOMAIN_PRIVATE}
