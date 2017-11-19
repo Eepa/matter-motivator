@@ -12,6 +12,7 @@ services:
       - CONSUL=mc.svc.${TRITON_CNS_SEARCH_DOMAIN_PRIVATE}
     depends_on:
       - "consul"
+      - "backend"
     ports:
       - 80
       - 443
@@ -34,7 +35,6 @@ services:
       - POSTGRES_HOST=motivatorpostgres.svc.${TRITON_CNS_SEARCH_DOMAIN_PRIVATE}
     depends_on:
       - "consul"
-      - "nginx"
       - "postgres"
     labels:
       - triton.cns.services=nb
